@@ -8,6 +8,6 @@
 }
 
 .canvas-pixel {
-    border: solid 1px red;
+    border: solid 0.1px red;
     box-sizing: border-box;
 }
