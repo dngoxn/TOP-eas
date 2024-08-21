@@ -8,19 +8,35 @@
     </head>
 
     <body>
-        <label>
-            Show Line
-            <input type="checkbox" id="toggle-line" checked>
-        </label>
-        <label>
-            Color Mode
-            <input type="checkbox" id="toggle-color">
-        </label>
-        <button id="reset">Reset</button>
-        <div class="slider-container">
-            <input type="range" min="1" max="64"
-            value="24" step="1" id="slider">
-        </div>
-        <div id="canvas"></div>
+        <main>
+            <div class="menu">
+                <div class="change-pixel">
+                    <label>
+                        Show Line
+                        <input type="checkbox" id="toggle-line" checked>
+                    </label>
+                    <label>
+                        Color Mode
+                        <input type="checkbox" id="toggle-color">
+                    </label>
+                    <label>
+                        Eraser
+                        <input type="checkbox" id="eraser">
+                    </label>
+                </div>
+                <div class="change-canvas">
+                    <label>
+                        Canvas Size
+                        <input type="range" min="1" max="64"
+                        value="24" step="1" id="slider">
+                    </label>
+                    <button id="reset">Reset</button>
+                </div>
+            </div>
+            <div id="canvas"></div>
+        </main>
+        <footer>
+            <p>© Temp Copyright</p>
+        </footer>
     </body>
 </html>

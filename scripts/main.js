@@ -3,9 +3,11 @@ const resetBtn = document.getElementById('reset');
 const slider = document.getElementById('slider');
 const toggleLine = document.getElementById('toggle-line');
 const toggleColor = document.getElementById('toggle-color');
+const toggleEraser = document.getElementById('eraser');
 
 const pixelStyleBorder = 'solid 0.1px black';
 const basicColor = '000000';
+const eraserColor = 'ffffff';
 let drawColor = getFormattedColor(basicColor);
 let isDrawing = false;
 
@@ -16,7 +18,8 @@ canvas.addEventListener('mouseup', () => { isDrawing = false; });
 resetBtn.addEventListener('click', resetCanvas);
 slider.oninput = () => { changeCanvasSize(slider.value); };
 toggleLine.addEventListener('click', toggleShowLine);
-toggleColor.addEventListener('click', toggleDrawColor)
+toggleColor.addEventListener('click', findDrawColor);
+toggleEraser.addEventListener('click', findDrawColor);
 
 function createNewCanvas(size) {
     // Create `size` x `size` children for canvas
@@ -47,7 +50,7 @@ function draw(e) {
 function continuousDraw(e) {
     // Allow continuous drawing from previous `mousedown`
     if (isDrawing === true) {
-        toggleDrawColor();
+        findDrawColor();
         e.target.style.backgroundColor = drawColor;
     }
 }
@@ -80,21 +83,25 @@ function toggleShowLine() {
     }
 }
 
-function toggleDrawColor() {
-    // Update `drawColor` to follow `toggleColor` option
-    if (toggleColor.checked) {
+function getFormattedColor(hexColor) {
+    // Format `hexColor` to CSS string
+    return '#' + hexColor;
+}
+
+function findDrawColor() {
+    if (toggleEraser.checked) {
+        // highest priority
+        drawColor = getFormattedColor(eraserColor);
+    }
+    else if (toggleColor.checked) {
         // credit for `randomColor` from
         // https://css-tricks.com/snippets/javascript/random-hex-color/
         const randomColor = Math.floor(Math.random()*16777215).toString(16);
         drawColor = getFormattedColor(randomColor);
     }
-    else
+    else {
         drawColor = getFormattedColor(basicColor);
-}
-
-function getFormattedColor(hexColor) {
-    // Format `hexColor` to CSS string
-    return '#' + hexColor;
+    }
 }
 
 createNewCanvas(slider.value);
