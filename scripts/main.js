@@ -2,14 +2,20 @@ const canvas = document.getElementById('canvas');
 const resetBtn = document.getElementById('reset');
 const slider = document.getElementById('slider');
 const toggleLine = document.getElementById('toggle-line');
-const toggleColor = document.getElementById('toggle-color');
-const toggleEraser = document.getElementById('eraser');
-
+const monochromeMode = document.getElementById('monochrome');
+const colorMode = document.getElementById('color');
+const eraserMode = document.getElementById('eraser');
+// MACRO
+const MONOCHROME = 'monochrome';
+const COLOR = 'color';
+const ERASER = 'eraser';
+const menuButtons = [monochromeMode, colorMode, eraserMode];
 const pixelStyleBorder = 'solid 0.1px black';
 const basicColor = '000000';
 const eraserColor = 'ffffff';
 let drawColor = getFormattedColor(basicColor);
 let isDrawing = false;
+let currentMode = MONOCHROME;
 
 canvas.addEventListener('mousedown', () => { isDrawing = true; });
 canvas.addEventListener('mouseup', () => { isDrawing = false; });
@@ -18,8 +24,9 @@ canvas.addEventListener('mouseup', () => { isDrawing = false; });
 resetBtn.addEventListener('click', resetCanvas);
 slider.oninput = () => { changeCanvasSize(slider.value); };
 toggleLine.addEventListener('click', toggleShowLine);
-toggleColor.addEventListener('click', findDrawColor);
-toggleEraser.addEventListener('click', findDrawColor);
+monochromeMode.addEventListener('click', (e) => { updateMode(e.target, MONOCHROME) })
+colorMode.addEventListener('click', (e) => { updateMode(e.target, COLOR) });
+eraserMode.addEventListener('click', (e) => { updateMode(e.target, ERASER) });
 
 function createNewCanvas(size) {
     // Create `size` x `size` children for canvas
@@ -44,6 +51,7 @@ function findPixelSize(size) {
 
 function draw(e) {
     // Update pixel to show background color
+    findDrawColor();
     e.target.style.backgroundColor = drawColor;
 }
 
@@ -89,19 +97,29 @@ function getFormattedColor(hexColor) {
 }
 
 function findDrawColor() {
-    if (toggleEraser.checked) {
-        // highest priority
-        drawColor = getFormattedColor(eraserColor);
+    switch (currentMode) {
+        case MONOCHROME:
+            drawColor = getFormattedColor(basicColor);
+            break;
+        case COLOR:
+            const randomColor = Math.floor(Math.random()*16777215).toString(16);
+            drawColor = getFormattedColor(randomColor);
+            break;
+        case ERASER:
+            drawColor = getFormattedColor(eraserColor);
+            break;
+        default:
+            throw new Error('No Mode available!');
     }
-    else if (toggleColor.checked) {
-        // credit for `randomColor` from
-        // https://css-tricks.com/snippets/javascript/random-hex-color/
-        const randomColor = Math.floor(Math.random()*16777215).toString(16);
-        drawColor = getFormattedColor(randomColor);
-    }
-    else {
-        drawColor = getFormattedColor(basicColor);
-    }
+}
+
+function updateMode(target, newMode) {
+    // Reset UI for menu button and update `currentMode`
+    menuButtons.forEach((button) => {
+        button.style.backgroundColor = '';
+    });
+    target.style.backgroundColor = 'red';
+    currentMode = newMode;
 }
 
 createNewCanvas(slider.value);
