@@ -16,18 +16,23 @@
                 <div class="change-pixel">
                     <label>
                         Show Grid
-                        <input type="checkbox" id="toggle-line">
+                        <input type="checkbox" id="toggle-line" checked>
                     </label>                        
                     <button id="monochrome">Monochrome</button>
                     <button id="color">Color</button>
                     <button id="eraser">Eraser</button>
-                    <button id="reset">Reset</button>
                 </div>
                 <div class="change-canvas">
+                    <button id="reset">Reset Canvas</button>
                     <label>
-                        Canvas Size
+                        Canvas Resolution
                         <input type="range" min="1" max="64"
-                        value="24" step="1" id="slider">
+                        value="4" step="1" id="resolution-slider">
+                    </label>
+                    <label>
+                        Canvas Size (400 - 600):
+                        <input type="number" min="400" max="600"
+                        value="500" step="10" id="size-slider">
                     </label>
                 </div>
             </div>

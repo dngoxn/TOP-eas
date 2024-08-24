@@ -29,6 +29,12 @@ main {
     align-items: flex-start;
 }
 
+button {
+    min-height: 64px;
+    min-width: 128px;
+    border-radius: 12px;
+}
+
 #canvas {
     min-height: 500px;
     min-width: 500px;

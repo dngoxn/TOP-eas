@@ -1,6 +1,7 @@
 const canvas = document.getElementById('canvas');
 const resetBtn = document.getElementById('reset');
-const slider = document.getElementById('slider');
+const resolutionSlider = document.getElementById('resolution-slider');
+const sizeSlider = document.getElementById('size-slider');
 const toggleLine = document.getElementById('toggle-line');
 const monochromeMode = document.getElementById('monochrome');
 const colorMode = document.getElementById('color');
@@ -22,7 +23,8 @@ canvas.addEventListener('mouseup', () => { isDrawing = false; });
 // Optional stricter boundary for drawing
 // canvas.addEventListener('mouseleave', () => { isDrawing = false; });
 resetBtn.addEventListener('click', resetCanvas);
-slider.oninput = () => { changeCanvasSize(slider.value); };
+resolutionSlider.oninput = () => { changeCanvasResolution(resolutionSlider.value); };
+sizeSlider.oninput = () => { changeCanvasSize(sizeSlider.value) };
 toggleLine.addEventListener('click', toggleShowLine);
 monochromeMode.addEventListener('click', (e) => { updateMode(e.target, MONOCHROME) })
 colorMode.addEventListener('click', (e) => { updateMode(e.target, COLOR) });
@@ -45,7 +47,7 @@ function createNewCanvas(size) {
 
 function findPixelSize(size) {
     // Find correct size and return string element
-    const canvasSize = 500;
+    const canvasSize = canvas.clientHeight;
     return String(canvasSize / size) + 'px';
 }
 
@@ -72,13 +74,43 @@ function deleteCanvas() {
 function resetCanvas() {
     // Reset `canvas` to blank
     deleteCanvas()
-    createNewCanvas(parseInt(slider.value));
+    createNewCanvas(parseInt(resolutionSlider.value));
+}
+
+function changeCanvasResolution(resolution) {
+    // Create new `canvas` with dimension `size`
+    deleteCanvas();
+    createNewCanvas(parseInt(resolution));
 }
 
 function changeCanvasSize(size) {
-    // Create new `canvas` with dimension `size`
+    // Change canvas size without change its content
+    let newSize = getValidatedNewSize(parseInt(size));
+    let oldCanvasValues = [];
+    for (const child of canvas.children) {
+        oldCanvasValues.push(child.style.backgroundColor);
+    }
+
+    canvas.style.minHeight = newSize + 'px';
+    canvas.style.minWidth = newSize + 'px';
+    canvas.style.height = newSize + 'px';
+    canvas.style.width = newSize + 'px';
+
     deleteCanvas();
-    createNewCanvas(parseInt(size));
+    createNewCanvas(Math.sqrt(oldCanvasValues.length));
+    for (let i = 0; i < oldCanvasValues.length; i++) {
+        canvas.children[i].style.backgroundColor = oldCanvasValues[i];
+    }
+}
+
+function getValidatedNewSize(size) {
+    const minSize = 400;
+    const maxSize = 600;
+    if (size < minSize)
+        return minSize;
+    else if (size > maxSize)
+        return maxSize;
+    return size;
 }
 
 function toggleShowLine() {
@@ -122,4 +154,5 @@ function updateMode(target, newMode) {
     currentMode = newMode;
 }
 
-createNewCanvas(slider.value);
+createNewCanvas(resolutionSlider.value);
+updateMode(monochromeMode, MONOCHROME);
