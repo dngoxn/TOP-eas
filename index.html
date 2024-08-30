@@ -9,12 +9,12 @@
 
     <body>
         <header>
-            <p>Etch a Sketch</p>
+            <p class="title">Etch a Sketch</p>
         </header>
         <main>
             <div class="menu">
                 <div class="change-pixel">
-                    <label>
+                    <label class="form-control">
                         Show Grid
                         <input type="checkbox" id="toggle-line" checked>
                     </label>                        
@@ -27,7 +27,7 @@
                     <label>
                         Canvas Resolution
                         <input type="range" min="1" max="64"
-                        value="4" step="1" id="resolution-slider">
+                        value="24" step="1" id="resolution-slider">
                     </label>
                     <label>
                         Canvas Size (400 - 600):
@@ -36,10 +36,12 @@
                     </label>
                 </div>
             </div>
-            <div id="canvas"></div>
+            <div class="canvas-frame">
+                <div id="canvas"></div>
+            </div>
         </main>
         <footer>
-            <p>© Temp Copyright</p>
+            <p>© dxngo</p>
         </footer>
     </body>
 </html>

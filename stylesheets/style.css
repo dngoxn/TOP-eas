@@ -3,16 +3,25 @@ html, body {
     height: 100%;
     display: flex;
     flex-direction: column;
+    background: linear-gradient(rgba(247, 204, 255, 0.2), rgba(224, 186, 144, 0.2));
+    /* background-color: grey; */
 }
 
 header {
     text-align: center;
 }
 
+.title {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 100px;
+    margin: 0px;
+    margin-top: 24px;
+}
+
 main {
     flex: 1;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
 }
 
@@ -21,6 +30,10 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+}
+
+.form-control {
+    font-family: system-ui, sans-serif;
 }
 
 .change-pixel, .change-canvas {
@@ -33,16 +46,40 @@ button {
     min-height: 64px;
     min-width: 128px;
     border-radius: 12px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-family: system-ui, sans-serif;
+    background-color: #fff9db;
+}
+
+button:hover {
+    background-color: #fae5af;
+}
+
+label {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-weight: 550;
+}
+
+.canvas-frame {
+    min-height: 600px;
+    min-width: 600px;
+    height: 600px;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #canvas {
-    min-height: 500px;
-    min-width: 500px;
     height: 500px;
     width: 500px;
     border: solid 2px black;
     display: flex;
     flex-wrap: wrap;
+    background-color: #fff;
 }
 
 .canvas-pixel {

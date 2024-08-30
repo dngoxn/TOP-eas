@@ -150,7 +150,7 @@ function updateMode(target, newMode) {
     menuButtons.forEach((button) => {
         button.style.backgroundColor = '';
     });
-    target.style.backgroundColor = 'red';
+    target.style.backgroundColor = '#fcd060';
     currentMode = newMode;
 }
 
